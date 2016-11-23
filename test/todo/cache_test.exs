@@ -14,4 +14,13 @@ defmodule Todo.CacheTest do
     info = :ets.info(Cache)
     assert info[:size] == 1
   end
+
+  test ".find gets a list out of the ETS table", %{list: list} do
+    Cache.find(list.name) == list
+  end
+
+  test ".clear deletes all objects from the ETS table", %{list: list} do
+    Cache.clear
+    refute Cache.find(list.name)
+  end
 end

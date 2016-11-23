@@ -6,6 +6,17 @@ defmodule Todo.Cache do
     :ets.insert(__MODULE__, {to_atom(list.name), list})
   end
 
+  def find(list_name) do
+    case :ets.lookup(__MODULE__, {to_atom(list_name)}) do
+      [{_id, value}] -> value
+      [] -> nil
+    end
+  end
+
+  def clear do
+    :ets.delete_all_objects(__MODULE__)
+  end
+
   ###
   # GenServer API
   ###
