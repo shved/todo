@@ -11,7 +11,11 @@ defmodule Todo.Server do
     end
   end
 
-  defp lists do
+  def delete_list(list) do
+    Supervisor.terminate_child(__MODULE__, list)
+  end
+
+  def lists do
     __MODULE__
     |> Supervisor.which_children
     |> Enum.map(fn({_, child, _, _}) -> child end)
