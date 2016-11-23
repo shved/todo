@@ -4,10 +4,12 @@ defmodule Todo.Cache do
 
   def save(list) do
     :ets.insert(__MODULE__, {to_atom(list.name), list})
+    # MEMO here .insert will update list if first tuple element (list name) will match
+    # so .save/1 both works fine for .add and .update lists
   end
 
   def find(list_name) do
-    case :ets.lookup(__MODULE__, {to_atom(list_name)}) do
+    case :ets.lookup(__MODULE__, to_atom(list_name)) do
       [{_id, value}] -> value
       [] -> nil
     end

@@ -16,7 +16,7 @@ defmodule Todo.CacheTest do
   end
 
   test ".find gets a list out of the ETS table", %{list: list} do
-    Cache.find(list.name) == list
+    assert Cache.find(list.name) == list
   end
 
   test ".clear deletes all objects from the ETS table", %{list: list} do
