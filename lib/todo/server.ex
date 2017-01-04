@@ -1,5 +1,6 @@
 defmodule Todo.Server do
   use Supervisor
+  alias Todo.Cache
 
   def add_list(name) do
     Supervisor.start_child(__MODULE__, [name])
@@ -29,7 +30,10 @@ defmodule Todo.Server do
     Supervisor.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def init(_) do
+  def init(lists) do
+    Enum.map(lists, fn(list) -> add_list(list.name) end)
+    Cache.clear
+
     children = [
       worker(Todo.List, [], restart: :transient)
     ]

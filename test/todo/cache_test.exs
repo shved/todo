@@ -1,6 +1,5 @@
 defmodule Todo.CacheTest do
   use ExUnit.Case
-
   alias Todo.Cache
 
   setup do

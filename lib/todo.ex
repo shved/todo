@@ -1,17 +1,19 @@
 defmodule Todo do
   use Application
+  alias Todo.Cache
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    lists = Cache.lists || []
     # Define workers and child supervisors to be supervised
     children = [
       # Starts a worker by calling: Todo.Worker.start_link(arg1, arg2, arg3)
       # worker(Todo.Worker, [arg1, arg2, arg3]),
       worker(Todo.Cache, []),
-      supervisor(Todo.Server, [])
+      supervisor(Todo.Server, lists)
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

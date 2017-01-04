@@ -15,6 +15,13 @@ defmodule Todo.Cache do
     end
   end
 
+  def lists do
+    :ets.lookup(__MODULE__, :lists) do
+      [{_id, value}] -> value
+      [] -> nil
+    end
+  end
+
   def clear do
     :ets.delete_all_objects(__MODULE__)
   end
